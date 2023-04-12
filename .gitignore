@@ -1,5 +1,7 @@
 .idea
 .pio
+.cache
+.vim
 CMakeListsPrivate.txt
 cmake-build-*/
-complile_commands.json
+compile_commands.json
