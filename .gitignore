@@ -1,0 +1,5 @@
+.idea
+.pio
+CMakeListsPrivate.txt
+cmake-build-*/
+complile_commands.json
