@@ -106,6 +106,12 @@ public:
 
     inline void clearCurrentCmd();
 
+    inline void stopStepperX();
+
+    inline void stopStepperY();
+
+    inline void stopStepperC();
+
 private:
     SerialInput serial_input_manager;
 

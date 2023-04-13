@@ -27,7 +27,7 @@ void SerialInput::onScan()
         input_message += (char) Serial.read();
     }
     Serial.println("--------------------");
-    Serial.println("serial_input: " + String(input_message));
+    Serial.println("[*] serial_input: " + String(input_message));
 
 }
 
