@@ -2,8 +2,8 @@
 // Created by cui on 2023/4/9.
 //
 
-#ifndef ARDUINO_TEST_MOTION_H
-#define ARDUINO_TEST_MOTION_H
+#ifndef TIRE_MOTION_CONTROL_MOTION_H
+#define TIRE_MOTION_CONTROL_MOTION_H
 
 #include <Arduino.h>
 #include <../lib/FlexiTimer2/FlexiTimer2.h>
@@ -156,27 +156,27 @@ private:
     String serial_message   = "";       // 上位机发来的消息
     String current_cmd      = "";       // 本机要执行的命令字符串
 
-    int cmd_type;
-    long cmd_value;
+    int cmd_type    = 0;
+    long cmd_value  = 0;
 
-    bool isRunning_X;       // X电机是否正在运动，若正在运动，则不允许执行其他指令（除了STOP_ALL）
-    bool isRunning_X_old;
-    bool isRunning_Y;       // Y电机是否正在运动，若正在运动，则不允许执行其他指令（除了STOP_ALL）
-    bool isRunning_Y_old;
-    bool isRunning_C;       // C电机是否正在运动，若正在运动，则不允许执行其他指令（除了STOP_ALL）
-    bool isRunning_C_old;
-    bool isStopped;
-    bool rotate_loop_c_running;
+    bool isRunning_X            = false;       // X电机是否正在运动，若正在运动，则不允许执行其他指令（除了STOP_ALL）
+    bool isRunning_X_old        = false;
+    bool isRunning_Y            = false;       // Y电机是否正在运动，若正在运动，则不允许执行其他指令（除了STOP_ALL）
+    bool isRunning_Y_old        = false;
+    bool isRunning_C            = false;       // C电机是否正在运动，若正在运动，则不允许执行其他指令（除了STOP_ALL）
+    bool isRunning_C_old        = false;
+    bool isStopped              = false;
+    bool rotate_loop_c_running  = false;
 
-    bool isArrived_X;
-    bool isArrived_Y;
-    bool isArrived_C;
+    bool isArrived_X = false;
+    bool isArrived_Y = false;
+    bool isArrived_C = false;
 
     AccelStepper stepperY = AccelStepper(AccelStepper::DRIVER, PIN_STEP_Y, PIN_DIR_Y);
     AccelStepper stepperX = AccelStepper(AccelStepper::DRIVER, PIN_STEP_X, PIN_DIR_X);
     AccelStepper stepperC = AccelStepper(AccelStepper::DRIVER, PIN_STEP_C, PIN_DIR_C);
 
-    Direction direction;
+    Direction direction = Direction::NONE;
 };
 
-#endif //ARDUINO_TEST_MOTION_H
+#endif //TIRE_MOTION_CONTROL_MOTION_H

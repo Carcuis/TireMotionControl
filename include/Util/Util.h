@@ -2,8 +2,8 @@
 // Created by cui on 2023/4/8.
 //
 
-#ifndef ARDUINO_TEST_UTIL_H
-#define ARDUINO_TEST_UTIL_H
+#ifndef TIRE_MOTION_CONTROL_UTIL_H
+#define TIRE_MOTION_CONTROL_UTIL_H
 
 #include <Arduino.h>
 #include "DigitalPin/DigitalPin.h"
@@ -17,4 +17,4 @@ public:
 
 };
 
-#endif //ARDUINO_TEST_UTIL_H
+#endif //TIRE_MOTION_CONTROL_UTIL_H

@@ -5,7 +5,6 @@
 #include "DigitalPin/PinManager.h"
 
 PinManager::PinManager()
-{
-}
+= default;
 
 

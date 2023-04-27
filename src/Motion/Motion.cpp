@@ -19,11 +19,21 @@ void Motion::init()
     Timer1.initialize(3000000);
     Timer1.stop();
 
+    cmd_type = 0;
+    cmd_value = 0;
+
     isRunning_X = false;
+    isRunning_X_old = false;
     isRunning_Y = false;
+    isRunning_Y_old = false;
     isRunning_C = false;
+    isRunning_C_old = false;
     isStopped = false;
     rotate_loop_c_running = false;
+
+    isArrived_X = false;
+    isArrived_Y = false;
+    isArrived_C = false;
 
     direction = Direction::NONE;
 
@@ -206,7 +216,7 @@ void Motion::processCmd()
     Serial.println("....................");
     Serial.println("[*] processCmd() start running...");
     // 只有电机静止状态才能响应其他指令(除非STOP_ALL急停指令）
-    if (isRunning_X || isRunning_Y)
+    if (isRunning_X || isRunning_Y || isRunning_C || rotate_loop_c_running)
     {
         Serial.println("[ERR] The stepper is running, please try again later...");
         clearCurrentCmd();
@@ -268,9 +278,14 @@ void Motion::processCmd()
         case MOVE_X:
             // 想要增加X坐标时, 需要确保X未达到MAX_X
             if (reachMaxX())
+            {
                 Serial.println("[ERR] X has reached MAX_X, can't move right...");
-            else if (cmd_value <= 0)
-                Serial.println("[ERR] Error: cmd_value <= 0, use cmd_type: 11 to move left.");
+                break;
+            }
+            if (cmd_value == 0)
+                Serial.println("[ERR] Error: cmd_value == 0. Stop.");
+            else if (cmd_value < 0)
+                Serial.println("[ERR] Error: cmd_value < 0, use cmd_type: 11 to move left.");
             else
             {
                 direction = Direction::RIGHT;
@@ -286,8 +301,10 @@ void Motion::processCmd()
                 Serial.println("[ERR] X has reached MIN_X, can't move left...");
                 break;
             }
-            if (cmd_value <= 0)
-                Serial.println("[ERR] Error: cmd_value <= 0, use cmd_type: 10 to move right.");
+            if (cmd_value == 0)
+                Serial.println("[ERR] Error: cmd_value == 0. Stop.");
+            else if (cmd_value < 0)
+                Serial.println("[ERR] Error: cmd_value < 0, use cmd_type: 10 to move right.");
             else
             {
                 direction = Direction::LEFT;
@@ -373,9 +390,14 @@ void Motion::processCmd()
         case MOVE_Y:
             // 想要增加Y坐标时, 需要确保Y达到MAX_Y
             if (reachMaxY())
+            {
                 Serial.println("[ERR] Y has reached MAX_Y, can't move down...");
-            else if (cmd_value <= 0)
-                Serial.println("[ERR] Error: cmd_value <= 0, use cmd_type: 21 to move down.");
+                break;
+            }
+            if (cmd_value == 0)
+                Serial.println("[ERR] Error: cmd_value == 0. Stop.");
+            else if (cmd_value < 0)
+                Serial.println("[ERR] Error: cmd_value < 0, use cmd_type: 21 to move down.");
             else
             {
                 direction = Direction::DOWN;
@@ -391,8 +413,10 @@ void Motion::processCmd()
                 Serial.println("[ERR] Y has reached MIN_Y, can't move up...");
                 break;
             }
-            if (cmd_value <= 0)
-                Serial.println("[ERR] Error: cmd_value <= 0, use cmd_type: 20 to move up.");
+            if (cmd_value == 0)
+                Serial.println("[ERR] Error: cmd_value == 0. Stop.");
+            else if (cmd_value < 0)
+                Serial.println("[ERR] Error: cmd_value < 0, use cmd_type: 20 to move up.");
             else
             {
                 direction = Direction::UP;
@@ -476,8 +500,10 @@ void Motion::processCmd()
         // C 命令组
         // 30 C电机向顺时针旋转一定的角度
         case ROTATE_C:
-            if (cmd_value <= 0)
-                Serial.println("[ERR] Error: cmd_value <= 0, use cmd_type: 31 to rotate counterclockwise.");
+            if (cmd_value == 0)
+                Serial.println("[ERR] Error: cmd_value == 0. Stop.");
+            else if (cmd_value < 0)
+                Serial.println("[ERR] Error: cmd_value < 0, use cmd_type: 31 to rotate counterclockwise.");
             else
             {
                 direction = Direction::CLOCKWISE;
@@ -487,8 +513,10 @@ void Motion::processCmd()
 
         // 31 C电机向逆时针旋转一定的角度
         case REVERSE_ROTATE_C:
-            if (cmd_value <= 0)
-                Serial.println("[ERR] Error: cmd_value <= 0, use cmd_type: 30 to rotate clockwise.");
+            if (cmd_value == 0)
+                Serial.println("[ERR] Error: cmd_value == 0. Stop.");
+            else if (cmd_value < 0)
+                Serial.println("[ERR] Error: cmd_value < 0, use cmd_type: 30 to rotate clockwise.");
             else
             {
                 direction = Direction::COUNTERCLOCKWISE;
@@ -556,11 +584,14 @@ void Motion::processCmd()
         //     Serial.println("[OK] reset stepper C finished...");
         //     break;
 
-        // 38 循环：电机C运动cmd_value角度后停止1s, 默认30度
+        // 38 循环：电机C每3秒运动cmd_value角度, 默认30度
         case ROTATE_LOOP_C:
             rotate_loop_c_running = true;
             if (cmd_value <= 0)
+            {
+                Serial.println("[*] Warning: cmd_value <= 0, using default value: 20");
                 cmd_value = 20;
+            }
             direction = Direction::COUNTERCLOCKWISE;
             Timer1.attachInterrupt([](){ motion_ptr->onRotateInterval(); });
             Timer1.start();
@@ -662,6 +693,6 @@ void Motion::stopStepperC()
     {
         rotate_loop_c_running = false;
         Timer1.stop();
-        Serial.println("[*] stop rotate loop C, Timer1 stopped...");
+        Serial.println("[*] stop rotate-loop-C, Timer1 stopped...");
     }
 }

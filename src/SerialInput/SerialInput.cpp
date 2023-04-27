@@ -10,7 +10,7 @@ SerialInput *serial_input_ptr = nullptr;
 SerialInput::SerialInput()
 {
     serial_input_ptr = this;
-    // 每250ms尝试读取一下串口是否有消息
+    // 每500ms尝试读取一下串口是否有消息
     FlexiTimer2::set(500, 1.0/1000, []() { serial_input_ptr->onScan(); });
     FlexiTimer2::start();
 }

@@ -2,8 +2,8 @@
 // Created by cui on 2023/4/8.
 //
 
-#ifndef ARDUINO_TEST_PINMANAGER_H
-#define ARDUINO_TEST_PINMANAGER_H
+#ifndef TIRE_MOTION_CONTROL_PIN_MANAGER_H
+#define TIRE_MOTION_CONTROL_PIN_MANAGER_H
 
 #include "DigitalPin.h"
 
@@ -17,4 +17,4 @@ public:
 
 };
 
-#endif //ARDUINO_TEST_PINMANAGER_H
+#endif //TIRE_MOTION_CONTROL_PIN_MANAGER_H

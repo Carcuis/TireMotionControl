@@ -2,8 +2,8 @@
 // Created by cui on 2023/4/10.
 //
 
-#ifndef ARDUINO_TEST_SERIALINPUT_H
-#define ARDUINO_TEST_SERIALINPUT_H
+#ifndef TIRE_MOTION_CONTROL_SERIAL_INPUT_H
+#define TIRE_MOTION_CONTROL_SERIAL_INPUT_H
 
 #include <Arduino.h>
 #include "../lib/FlexiTimer2/FlexiTimer2.h"
@@ -22,4 +22,4 @@ public:
 
 };
 
-#endif //ARDUINO_TEST_SERIALINPUT_H
+#endif //TIRE_MOTION_CONTROL_SERIAL_INPUT_H

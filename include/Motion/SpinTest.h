@@ -2,8 +2,8 @@
 // Created by cui on 2023/4/8.
 //
 
-#ifndef ARDUINO_TEST_SPINTEST_H
-#define ARDUINO_TEST_SPINTEST_H
+#ifndef TIRE_MOTION_CONTROL_SPIN_TEST_H
+#define TIRE_MOTION_CONTROL_SPIN_TEST_H
 
 #include <Arduino.h>
 #include "../lib/AccelStepper/AccelStepper.h"
@@ -24,4 +24,4 @@ private:
     AccelStepper stepperH = AccelStepper(AccelStepper::DRIVER, stepPinH, dirPinH);
 };
 
-#endif //ARDUINO_TEST_SPINTEST_H
+#endif //TIRE_MOTION_CONTROL_SPIN_TEST_H

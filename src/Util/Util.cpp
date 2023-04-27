@@ -5,8 +5,7 @@
 #include "Util/Util.h"
 
 Util::Util()
-{
-}
+= default;
 
 void Util::init()
 {

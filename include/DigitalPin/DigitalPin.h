@@ -2,8 +2,8 @@
 // Created by cui on 2023/4/8.
 //
 
-#ifndef ARDUINO_TEST_DIGITALPIN_H
-#define ARDUINO_TEST_DIGITALPIN_H
+#ifndef TIRE_MOTION_CONTROL_DIGITAL_PIN_H
+#define TIRE_MOTION_CONTROL_DIGITAL_PIN_H
 
 #include <Arduino.h>
 
@@ -26,4 +26,4 @@ private:
     PinState state = PinState::OFF;
 };
 
-#endif //ARDUINO_TEST_DIGITALPIN_H
+#endif //TIRE_MOTION_CONTROL_DIGITAL_PIN_H
